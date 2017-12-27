@@ -1,0 +1,40 @@
+---
+title: "Distribution_Visualization"
+author: "Marcon Laforet"
+date: '2017-12-26'
+output: html_document
+---
+
+```{r airquality}
+# load packages
+require(ggplot2)
+
+#read in data
+dat <- read.csv('distribution_data.csv', header=TRUE, sep=",")
+
+#boxplot
+p <- ggplot(dat, aes(x=ID, y=dat$Zpx, color=dat$ID)) + geom_boxplot(width=0.1) + theme_bw() + coord_flip()
+p
+
+
+#histogram
+p <- ggplot(dat, aes(Zpx, fill = ID), breaks=200) + geom_histogram(alpha = 0.5, position = 'identity', binwidth=0.1)
+p
+
+#stip plot
+p <- ggplot(dat, aes(x=ID, y=dat$Zpx, color=dat$ID, alpha=0.8)) + geom_jitter(position=position_jitter(0.3)) + theme_bw()
+p
+
+#violin plot with inset boxplot
+p <- ggplot(dat, aes(x=ID, y=dat$Zpx, color=dat$ID, alpha=0.8)) + geom_violin(trim=FALSE) + geom_boxplot(width=0.1) + theme_bw()
+p
+
+#overlapping histograms from airquality dataset
+p <- ggplot(airquality, aes(x = airquality$Temp, fill=factor(airquality$Month))) + geom_histogram(binwidth = 1) + theme_bw()
+p
+
+#density plots from airquality dataset
+p <- ggplot(airquality, aes(x=airquality$Temp, color=factor(airquality$Month))) +
+geom_density(alpha=0.5) + theme_bw()
+p
+```
